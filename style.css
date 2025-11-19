@@ -78,20 +78,6 @@ header {
     opacity: 0.9;
 }
 
-.header-dates p {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.hashtag {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-}
-
 .hero {
     text-align: center;
     max-width: 800px;
@@ -114,7 +100,26 @@ header {
 
 .theme {
     font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.hero-dates {
     margin-bottom: 30px;
+}
+
+.dates {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.hashtag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .hero-actions {
@@ -395,5 +400,13 @@ footer {
     .footer-content {
         flex-direction: column;
         text-align: center;
+    }
+    
+    .dates {
+        font-size: 1.1rem;
+    }
+    
+    .hashtag {
+        font-size: 1rem;
     }
 }
