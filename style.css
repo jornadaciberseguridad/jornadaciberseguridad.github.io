@@ -70,10 +70,45 @@ body {
 header {
     background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
     color: var(--white);
-    padding: 80px 0;
-    min-height: 100vh;
+    padding: 30px 0 80px 0;
+}
+
+.header-top {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.logo-container {
     display: flex;
     align-items: center;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text span:first-child {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.logo-text span:last-child {
+    font-size: 1rem;
+    opacity: 0.9;
 }
 
 .hero {
@@ -390,8 +425,10 @@ footer {
     font-weight: 600;
 }
 
-.footer-logo i {
-    font-size: 2rem;
+.footer-logo-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }
 
 .footer-info {
@@ -428,9 +465,30 @@ footer {
         transform: translateY(0);
     }
     
+    .header-top {
+        margin-bottom: 30px;
+    }
+    
+    .logo-container {
+        padding: 12px 20px;
+        gap: 15px;
+    }
+    
+    .logo-img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-text span:first-child {
+        font-size: 1.2rem;
+    }
+    
+    .logo-text span:last-child {
+        font-size: 0.9rem;
+    }
+    
     header {
-        padding: 60px 0;
-        min-height: auto;
+        padding: 30px 0 60px 0;
     }
     
     .hero h1 {
@@ -493,6 +551,11 @@ footer {
         flex-direction: column;
         text-align: center;
         gap: 25px;
+    }
+    
+    .footer-logo-img {
+        width: 40px;
+        height: 40px;
     }
     
     section {
