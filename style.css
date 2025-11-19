@@ -443,14 +443,15 @@ footer {
 }
 
 .footer-logo-wrapper {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--white);
     border-radius: 50%;
-    padding: 5px;
+    padding: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .footer-logo-img {
@@ -584,8 +585,9 @@ footer {
     }
     
     .footer-logo-wrapper {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
+        padding: 6px;
     }
     
     section {
@@ -598,5 +600,48 @@ footer {
     
     .info-card {
         padding: 40px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.4rem;
+    }
+    
+    .hashtag-large {
+        font-size: 1.1rem;
+        padding: 10px 20px;
+    }
+    
+    .dates {
+        font-size: 1.1rem;
+    }
+    
+    .theme {
+        font-size: 1rem;
+    }
+    
+    .logo-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 200px;
+        text-align: center;
     }
 }
