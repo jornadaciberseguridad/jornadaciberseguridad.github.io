@@ -43,7 +43,7 @@
                     </div>
                     <div class="hero-actions">
                         <a href="#programa" class="btn btn-primary">Ver Programa</a>
-                        <a href="#informacion" class="btn btn-secondary">Más Información</a>
+                        <a href="#galeria" class="btn btn-secondary">Ver Galería</a>
                     </div>
                 </div>
             </div>
@@ -79,6 +79,7 @@
         </div>
     </section>
 
+    <!-- Sección del Programa de Actividades -->
     <section id="programa" class="program-section">
         <div class="container">
             <h2 class="section-title">Programa de Actividades</h2>
@@ -289,18 +290,25 @@
             
             <div class="gallery-filters">
                 <button class="filter-btn active" data-filter="all">Todas</button>
-                <button class="filter-btn" data-filter="conferencias">Conferencias</button>
-                <button class="filter-btn" data-filter="talleres">Talleres</button>
-                <button class="filter-btn" data-filter="feria">Feria Tecnológica</button>
-                <button class="filter-btn" data-filter="participantes">Participantes</button>
+                <button class="filter-btn" data-filter="JNC2025">JNC 2025</button>
             </div>
             
             <div class="gallery-grid">
                 <!-- Las imágenes se cargarán dinámicamente con JavaScript -->
+                <div class="gallery-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando imágenes de la galería...</p>
+                </div>
             </div>
             
-            <div class="gallery-load-more">
+            <div class="gallery-load-more" style="display: none;">
                 <button id="loadMoreBtn" class="btn btn-primary">Cargar más imágenes</button>
+            </div>
+            
+            <div class="gallery-empty" style="display: none;">
+                <i class="fas fa-images"></i>
+                <p>No se encontraron imágenes en la galería</p>
+                <p class="gallery-help">Asegúrate de tener imágenes en la carpeta <strong>galeria/2025</strong></p>
             </div>
         </div>
     </section>
@@ -486,22 +494,51 @@
         const modalClose = document.querySelector('.modal-close');
         const modalPrev = document.querySelector('.modal-prev');
         const modalNext = document.querySelector('.modal-next');
+        const galleryLoading = document.querySelector('.gallery-loading');
+        const galleryEmpty = document.querySelector('.gallery-empty');
+        const galleryLoadMore = document.querySelector('.gallery-load-more');
 
-        // Datos de ejemplo para la galería (reemplazar con imágenes reales)
-        const galleryImages = [
-            { src: 'galeria/2025/conferencia1.jpg', category: 'conferencias', caption: 'Conferencia inaugural sobre IA y ciberseguridad' },
-            { src: 'galeria/2025/conferencia2.jpg', category: 'conferencias', caption: 'Panel de expertos discutiendo los retos actuales' },
-            { src: 'galeria/2025/taller1.jpg', category: 'talleres', caption: 'Taller práctico de seguridad en dispositivos móviles' },
-            { src: 'galeria/2025/taller2.jpg', category: 'talleres', caption: 'Sesión de trabajo sobre protección de datos' },
-            { src: 'galeria/2025/feria1.jpg', category: 'feria', caption: 'Stand de ETECSA en la feria tecnológica' },
-            { src: 'galeria/2025/feria2.jpg', category: 'feria', caption: 'Demostración de soluciones de seguridad' },
-            { src: 'galeria/2025/participantes1.jpg', category: 'participantes', caption: 'Participantes interactuando en las actividades' },
-            { src: 'galeria/2025/participantes2.jpg', category: 'participantes', caption: 'Estudiantes mostrando interés en las conferencias' },
-            { src: 'galeria/2025/conferencia3.jpg', category: 'conferencias', caption: 'Especialista de MININT hablando sobre ciberacoso' },
-            { src: 'galeria/2025/taller3.jpg', category: 'talleres', caption: 'Taller de robótica y ciberseguridad' },
-            { src: 'galeria/2025/feria3.jpg', category: 'feria', caption: 'Presentación de nuevas tecnologías' },
-            { src: 'galeria/2025/participantes3.jpg', category: 'participantes', caption: 'Momento de networking entre especialistas' }
-        ];
+        // Lista de imágenes de ejemplo (en producción, esto vendría de un servidor)
+        const galleryImages = [];
+        
+        // Simular carga de imágenes desde la carpeta galeria/2025
+        function loadGalleryImages() {
+            // En un entorno real, aquí harías una petición al servidor
+            // para obtener la lista de archivos en galeria/2025
+            // Por ahora usamos imágenes de ejemplo
+            
+            // Simular delay de carga
+            setTimeout(() => {
+                // Aquí iría la lógica para escanear la carpeta galeria/2025
+                // Por ahora usamos imágenes de ejemplo
+                const exampleImages = [
+                    'galeria/2025/foto1.jpg',
+                    'galeria/2025/foto2.jpg',
+                    'galeria/2025/foto3.jpg',
+                    'galeria/2025/foto4.jpg',
+                    'galeria/2025/foto5.jpg',
+                    'galeria/2025/foto6.jpg',
+                    'galeria/2025/foto7.jpg',
+                    'galeria/2025/foto8.jpg',
+                    'galeria/2025/foto9.jpg',
+                    'galeria/2025/foto10.jpg',
+                    'galeria/2025/foto11.jpg',
+                    'galeria/2025/foto12.jpg'
+                ];
+                
+                // Crear objetos de imagen con categoría por defecto JNC2025
+                exampleImages.forEach((src, index) => {
+                    galleryImages.push({
+                        src: src,
+                        category: 'JNC2025',
+                        caption: `Imagen ${index + 1} de la Jornada Nacional de Ciberseguridad 2025`
+                    });
+                });
+                
+                // Inicializar galería con las imágenes cargadas
+                initGallery();
+            }, 1500);
+        }
 
         let currentFilter = 'all';
         let currentImages = [];
@@ -510,6 +547,13 @@
 
         // Inicializar galería
         function initGallery() {
+            galleryLoading.style.display = 'none';
+            
+            if (galleryImages.length === 0) {
+                galleryEmpty.style.display = 'block';
+                return;
+            }
+            
             currentImages = [...galleryImages];
             renderGallery();
             setupFilters();
@@ -526,6 +570,12 @@
             
             const imagesToShow = filteredImages.slice(0, visibleImages);
             
+            if (imagesToShow.length === 0) {
+                galleryEmpty.style.display = 'block';
+                galleryLoadMore.style.display = 'none';
+                return;
+            }
+            
             imagesToShow.forEach((image, index) => {
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item';
@@ -534,7 +584,7 @@
                 
                 galleryItem.innerHTML = `
                     <div class="gallery-img-container">
-                        <img src="${image.src}" alt="${image.caption}" class="gallery-img">
+                        <img src="${image.src}" alt="${image.caption}" class="gallery-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbiBubyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
                         <div class="gallery-overlay">
                             <div class="gallery-caption">${image.caption}</div>
                             <div class="gallery-zoom">
@@ -549,14 +599,19 @@
             
             // Mostrar u ocultar botón "Cargar más"
             if (visibleImages >= filteredImages.length) {
-                loadMoreBtn.style.display = 'none';
+                galleryLoadMore.style.display = 'none';
             } else {
-                loadMoreBtn.style.display = 'block';
+                galleryLoadMore.style.display = 'block';
             }
             
             // Agregar event listeners a las imágenes
             document.querySelectorAll('.gallery-img-container').forEach((container, index) => {
-                container.addEventListener('click', () => openModal(index, filteredImages));
+                container.addEventListener('click', () => {
+                    const filteredImages = currentFilter === 'all' 
+                        ? currentImages 
+                        : currentImages.filter(img => img.category === currentFilter);
+                    openModal(index, filteredImages);
+                });
             });
         }
 
@@ -652,7 +707,7 @@
         });
 
         // Inicializar la galería cuando se carga la página
-        document.addEventListener('DOMContentLoaded', initGallery);
+        document.addEventListener('DOMContentLoaded', loadGalleryImages);
     </script>
 </body>
 </html>
