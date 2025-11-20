@@ -281,6 +281,41 @@
         </div>
     </section>
 
+    <!-- Nueva sección de Galería -->
+    <section id="galeria" class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">Galería de Imágenes</h2>
+            <p class="section-subtitle">Momentos destacados de la IV Jornada Nacional de Ciberseguridad 2025</p>
+            
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="conferencias">Conferencias</button>
+                <button class="filter-btn" data-filter="talleres">Talleres</button>
+                <button class="filter-btn" data-filter="feria">Feria Tecnológica</button>
+                <button class="filter-btn" data-filter="participantes">Participantes</button>
+            </div>
+            
+            <div class="gallery-grid">
+                <!-- Las imágenes se cargarán dinámicamente con JavaScript -->
+            </div>
+            
+            <div class="gallery-load-more">
+                <button id="loadMoreBtn" class="btn btn-primary">Cargar más imágenes</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para vista ampliada de imágenes -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+        <div class="modal-nav">
+            <button class="modal-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="modal-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -440,6 +475,184 @@
                 }
             });
         });
+
+        // GALERÍA DE IMÁGENES - JavaScript
+        const galleryGrid = document.querySelector('.gallery-grid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        const modalClose = document.querySelector('.modal-close');
+        const modalPrev = document.querySelector('.modal-prev');
+        const modalNext = document.querySelector('.modal-next');
+
+        // Datos de ejemplo para la galería (reemplazar con imágenes reales)
+        const galleryImages = [
+            { src: 'galeria/2025/conferencia1.jpg', category: 'conferencias', caption: 'Conferencia inaugural sobre IA y ciberseguridad' },
+            { src: 'galeria/2025/conferencia2.jpg', category: 'conferencias', caption: 'Panel de expertos discutiendo los retos actuales' },
+            { src: 'galeria/2025/taller1.jpg', category: 'talleres', caption: 'Taller práctico de seguridad en dispositivos móviles' },
+            { src: 'galeria/2025/taller2.jpg', category: 'talleres', caption: 'Sesión de trabajo sobre protección de datos' },
+            { src: 'galeria/2025/feria1.jpg', category: 'feria', caption: 'Stand de ETECSA en la feria tecnológica' },
+            { src: 'galeria/2025/feria2.jpg', category: 'feria', caption: 'Demostración de soluciones de seguridad' },
+            { src: 'galeria/2025/participantes1.jpg', category: 'participantes', caption: 'Participantes interactuando en las actividades' },
+            { src: 'galeria/2025/participantes2.jpg', category: 'participantes', caption: 'Estudiantes mostrando interés en las conferencias' },
+            { src: 'galeria/2025/conferencia3.jpg', category: 'conferencias', caption: 'Especialista de MININT hablando sobre ciberacoso' },
+            { src: 'galeria/2025/taller3.jpg', category: 'talleres', caption: 'Taller de robótica y ciberseguridad' },
+            { src: 'galeria/2025/feria3.jpg', category: 'feria', caption: 'Presentación de nuevas tecnologías' },
+            { src: 'galeria/2025/participantes3.jpg', category: 'participantes', caption: 'Momento de networking entre especialistas' }
+        ];
+
+        let currentFilter = 'all';
+        let currentImages = [];
+        let currentIndex = 0;
+        let visibleImages = 8;
+
+        // Inicializar galería
+        function initGallery() {
+            currentImages = [...galleryImages];
+            renderGallery();
+            setupFilters();
+            setupModal();
+        }
+
+        // Renderizar imágenes en la galería
+        function renderGallery() {
+            galleryGrid.innerHTML = '';
+            
+            const filteredImages = currentFilter === 'all' 
+                ? currentImages 
+                : currentImages.filter(img => img.category === currentFilter);
+            
+            const imagesToShow = filteredImages.slice(0, visibleImages);
+            
+            imagesToShow.forEach((image, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.setAttribute('data-category', image.category);
+                galleryItem.setAttribute('data-index', index);
+                
+                galleryItem.innerHTML = `
+                    <div class="gallery-img-container">
+                        <img src="${image.src}" alt="${image.caption}" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <div class="gallery-caption">${image.caption}</div>
+                            <div class="gallery-zoom">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                galleryGrid.appendChild(galleryItem);
+            });
+            
+            // Mostrar u ocultar botón "Cargar más"
+            if (visibleImages >= filteredImages.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+            
+            // Agregar event listeners a las imágenes
+            document.querySelectorAll('.gallery-img-container').forEach((container, index) => {
+                container.addEventListener('click', () => openModal(index, filteredImages));
+            });
+        }
+
+        // Configurar filtros
+        function setupFilters() {
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remover clase active de todos los botones
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Agregar clase active al botón clickeado
+                    btn.classList.add('active');
+                    
+                    currentFilter = btn.getAttribute('data-filter');
+                    visibleImages = 8;
+                    renderGallery();
+                });
+            });
+        }
+
+        // Configurar modal
+        function setupModal() {
+            // Cerrar modal
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            
+            // Navegación
+            modalPrev.addEventListener('click', showPrevImage);
+            modalNext.addEventListener('click', showNextImage);
+            
+            // Navegación con teclado
+            document.addEventListener('keydown', (e) => {
+                if (modal.style.display === 'block') {
+                    if (e.key === 'Escape') closeModal();
+                    if (e.key === 'ArrowLeft') showPrevImage();
+                    if (e.key === 'ArrowRight') showNextImage();
+                }
+            });
+        }
+
+        // Abrir modal
+        function openModal(index, images) {
+            const filteredImages = currentFilter === 'all' 
+                ? currentImages 
+                : currentImages.filter(img => img.category === currentFilter);
+                
+            currentIndex = index;
+            const image = filteredImages[currentIndex];
+            
+            modalImg.src = image.src;
+            modalCaption.textContent = image.caption;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Mostrar imagen anterior
+        function showPrevImage() {
+            const filteredImages = currentFilter === 'all' 
+                ? currentImages 
+                : currentImages.filter(img => img.category === currentFilter);
+                
+            currentIndex = (currentIndex - 1 + filteredImages.length) % filteredImages.length;
+            const image = filteredImages[currentIndex];
+            
+            modalImg.src = image.src;
+            modalCaption.textContent = image.caption;
+        }
+
+        // Mostrar siguiente imagen
+        function showNextImage() {
+            const filteredImages = currentFilter === 'all' 
+                ? currentImages 
+                : currentImages.filter(img => img.category === currentFilter);
+                
+            currentIndex = (currentIndex + 1) % filteredImages.length;
+            const image = filteredImages[currentIndex];
+            
+            modalImg.src = image.src;
+            modalCaption.textContent = image.caption;
+        }
+
+        // Cargar más imágenes
+        loadMoreBtn.addEventListener('click', () => {
+            visibleImages += 4;
+            renderGallery();
+        });
+
+        // Inicializar la galería cuando se carga la página
+        document.addEventListener('DOMContentLoaded', initGallery);
     </script>
 </body>
 </html>
