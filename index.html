@@ -498,47 +498,35 @@
         const galleryEmpty = document.querySelector('.gallery-empty');
         const galleryLoadMore = document.querySelector('.gallery-load-more');
 
-        // Lista de imágenes de ejemplo (en producción, esto vendría de un servidor)
-        const galleryImages = [];
-        
-        // Simular carga de imágenes desde la carpeta galeria/2025
-        function loadGalleryImages() {
-            // En un entorno real, aquí harías una petición al servidor
-            // para obtener la lista de archivos en galeria/2025
-            // Por ahora usamos imágenes de ejemplo
-            
-            // Simular delay de carga
-            setTimeout(() => {
-                // Aquí iría la lógica para escanear la carpeta galeria/2025
-                // Por ahora usamos imágenes de ejemplo
-                const exampleImages = [
-                    'galeria/2025/foto1.jpg',
-                    'galeria/2025/foto2.jpg',
-                    'galeria/2025/foto3.jpg',
-                    'galeria/2025/foto4.jpg',
-                    'galeria/2025/foto5.jpg',
-                    'galeria/2025/foto6.jpg',
-                    'galeria/2025/foto7.jpg',
-                    'galeria/2025/foto8.jpg',
-                    'galeria/2025/foto9.jpg',
-                    'galeria/2025/foto10.jpg',
-                    'galeria/2025/foto11.jpg',
-                    'galeria/2025/foto12.jpg'
-                ];
-                
-                // Crear objetos de imagen con categoría por defecto JNC2025
-                exampleImages.forEach((src, index) => {
-                    galleryImages.push({
-                        src: src,
-                        category: 'JNC2025',
-                        caption: `Imagen ${index + 1} de la Jornada Nacional de Ciberseguridad 2025`
-                    });
-                });
-                
-                // Inicializar galería con las imágenes cargadas
-                initGallery();
-            }, 1500);
-        }
+        // LISTA de imágenes reales - foto1.jpeg a foto26.jpeg
+        const galleryImages = [
+            { src: 'galeria/2025/foto1.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
+            { src: 'galeria/2025/foto2.jpeg', category: 'JNC2025', caption: 'Conferencia magistral sobre IA y ciberseguridad' },
+            { src: 'galeria/2025/foto3.jpeg', category: 'JNC2025', caption: 'Panel de expertos en ciberseguridad' },
+            { src: 'galeria/2025/foto4.jpeg', category: 'JNC2025', caption: 'Participantes durante las sesiones técnicas' },
+            { src: 'galeria/2025/foto5.jpeg', category: 'JNC2025', caption: 'Taller práctico de seguridad informática' },
+            { src: 'galeria/2025/foto6.jpeg', category: 'JNC2025', caption: 'Feria tecnológica expositiva' },
+            { src: 'galeria/2025/foto7.jpeg', category: 'JNC2025', caption: 'Especialistas de ETECSA compartiendo experiencias' },
+            { src: 'galeria/2025/foto8.jpeg', category: 'JNC2025', caption: 'Conferencia sobre protección de datos personales' },
+            { src: 'galeria/2025/foto9.jpeg', category: 'JNC2025', caption: 'Estudiantes participando en las actividades' },
+            { src: 'galeria/2025/foto10.jpeg', category: 'JNC2025', caption: 'Demostración de herramientas de seguridad' },
+            { src: 'galeria/2025/foto11.jpeg', category: 'JNC2025', caption: 'Sesión de preguntas y respuestas' },
+            { src: 'galeria/2025/foto12.jpeg', category: 'JNC2025', caption: 'Networking entre especialistas' },
+            { src: 'galeria/2025/foto13.jpeg', category: 'JNC2025', caption: 'Conferencia sobre ciberamenazas emergentes' },
+            { src: 'galeria/2025/foto14.jpeg', category: 'JNC2025', caption: 'Taller de concienciación digital' },
+            { src: 'galeria/2025/foto15.jpeg', category: 'JNC2025', caption: 'Presentación de casos de estudio' },
+            { src: 'galeria/2025/foto16.jpeg', category: 'JNC2025', caption: 'Especialistas del MININT en acción' },
+            { src: 'galeria/2025/foto17.jpeg', category: 'JNC2025', caption: 'Actividad con instituciones académicas' },
+            { src: 'galeria/2025/foto18.jpeg', category: 'JNC2025', caption: 'Conferencia sobre soberanía tecnológica' },
+            { src: 'galeria/2025/foto19.jpeg', category: 'JNC2025', caption: 'Participación del sector empresarial' },
+            { src: 'galeria/2025/foto20.jpeg', category: 'JNC2025', caption: 'Sesión de trabajo grupal' },
+            { src: 'galeria/2025/foto21.jpeg', category: 'JNC2025', caption: 'Demostración de seguridad móvil' },
+            { src: 'galeria/2025/foto22.jpeg', category: 'JNC2025', caption: 'Conferencia sobre ciberseguridad en redes sociales' },
+            { src: 'galeria/2025/foto23.jpeg', category: 'JNC2025', caption: 'Actividad con adultos mayores' },
+            { src: 'galeria/2025/foto24.jpeg', category: 'JNC2025', caption: 'Presentación de resultados y conclusiones' },
+            { src: 'galeria/2025/foto25.jpeg', category: 'JNC2025', caption: 'Entrega de reconocimientos' },
+            { src: 'galeria/2025/foto26.jpeg', category: 'JNC2025', caption: 'Clausura de la IV Jornada Nacional de Ciberseguridad' }
+        ];
 
         let currentFilter = 'all';
         let currentImages = [];
@@ -575,6 +563,8 @@
                 galleryLoadMore.style.display = 'none';
                 return;
             }
+            
+            galleryEmpty.style.display = 'none';
             
             imagesToShow.forEach((image, index) => {
                 const galleryItem = document.createElement('div');
@@ -702,12 +692,12 @@
 
         // Cargar más imágenes
         loadMoreBtn.addEventListener('click', () => {
-            visibleImages += 4;
+            visibleImages += 8;
             renderGallery();
         });
 
         // Inicializar la galería cuando se carga la página
-        document.addEventListener('DOMContentLoaded', loadGalleryImages);
+        document.addEventListener('DOMContentLoaded', initGallery);
     </script>
 </body>
 </html>
