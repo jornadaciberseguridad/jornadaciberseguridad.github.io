@@ -1,766 +1,1188 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IV Jornada Nacional de Ciberseguridad de Cuba 2025</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Botón para subir -->
-    <button id="scrollToTop" class="scroll-top-btn">
-        <i class="fas fa-chevron-up"></i>
-    </button>
+/* Variables de color */
+:root {
+    --primary-blue: #000c49;
+    --secondary-blue: #001a7a;
+    --accent-blue: #0033a6;
+    --light-blue: #e6f0ff;
+    --white: #ffffff;
+    --light-gray: #f8f9fa;
+    --text-dark: #333333;
+    --text-light: #666666;
+}
 
-    <header>
-        <!-- Canvas para partículas solo en el hero - DETRÁS del contenido -->
-        <canvas id="particlesCanvas"></canvas>
-        
-        <div class="container">
-            <div class="header-top">
-                <div class="logo-container">
-                    <div class="logo-wrapper">
-                        <img src="logo.png" alt="Logo Jornada Nacional de Ciberseguridad" class="logo-img">
-                    </div>
-                    <div class="logo-text">
-                        <span class="logo-main">JNC 2025</span>
-                        <span class="logo-sub">Ciberseguridad Cuba</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="hero">
-                <div class="hero-content">
-                    <h1>IV Jornada Nacional de Ciberseguridad de Cuba</h1>
-                    <h2>Protegiendo el presente, asegurando el futuro</h2>
-                    <div class="hero-tagline">
-                        <div class="hashtag-large">#CiberseguridadParaTodos</div>
-                    </div>
-                    <div class="hero-dates">
-                        <p class="dates">20-30 Noviembre 2025</p>
-                        <p class="theme">Tema central: <strong>Ciberseguridad en la era de la IA</strong></p>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="#programa" class="btn btn-primary">Ver Programa</a>
-                        <a href="#galeria" class="btn btn-secondary">Ver Galería</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+/* Estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    <section id="informacion" class="info-section">
-        <div class="container">
-            <h2 class="section-title">Información General</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3>Objetivo</h3>
-                    <p>Promover una cultura de ciberseguridad en Cuba, fomentando el intercambio de conocimientos y experiencias entre especialistas, instituciones y la ciudadanía.</p>
-                </div>
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>Enfoque</h3>
-                    <p>Analizar los desafíos y oportunidades que presenta la Inteligencia Artificial en el ámbito de la ciberseguridad, tanto como herramienta de protección como potencial amenaza.</p>
-                </div>
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Participantes</h3>
-                    <p>Especialistas de OTC, ETECSA, UNISS, UIC, MININT, Gobierno, instituciones académicas y empresas tecnológicas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+body {
+    background-color: var(--white);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
 
-    <!-- Sección de Publicidad antes del Programa -->
-    <section class="ad-section">
-        <div class="container">
-            <div class="ad-content">
-                <div class="ad-image-container">
-                    <img src="publicidad/publicidad1-inauguracion.jpeg" alt="Publicidad Inauguración JNC 2025" class="ad-image">
-                    <div class="ad-image-overlay">
-                        <div class="ad-zoom-btn">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="ad-text">
-                    <h3>¡No te pierdas la inauguración!</h3>
-                    <p>Jueves 20 de Noviembre, 09:00</p>
-                    <p>Universidad José Martí, Sancti Spíritus</p>
-                    <p class="ad-click-hint">Haz clic en la imagen para ampliar</p>
-                </div>
-            </div>
-        </div>
-    </section>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-    <!-- Modal para la imagen de publicidad ampliada -->
-    <div id="adModal" class="modal ad-modal">
-        <span class="modal-close">&times;</span>
-        <img class="modal-content" id="adModalImage" src="publicidad/publicidad1-inauguracion.jpeg" alt="Publicidad Inauguración JNC 2025">
-        <div class="modal-caption">Publicidad - Inauguración JNC 2025</div>
-    </div>
+/* Canvas para partículas - DETRÁS del contenido */
+#particlesCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: transparent;
+}
 
-    <!-- Sección del Programa de Actividades -->
-    <section id="programa" class="program-section">
-        <div class="container">
-            <h2 class="section-title">Programa de Actividades</h2>
-            
-            <div class="timeline">
-                <!-- Martes 18 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Martes 18</div>
-                    <div class="timeline-content">
-                        <h3>Conferencia de prensa</h3>
-                        <p class="time">09:00</p>
-                        <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                        <p class="participants">Participantes: Especialistas de la OTC, ETECSA, UNISS, UIC, MININT, Gobierno</p>
-                    </div>
-                </div>
+/* Botón para subir */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(0, 12, 73, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-                <!-- Jueves 20 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Jueves 20</div>
-                    <div class="timeline-content">
-                        <h3>Apertura de la IV Jornada Nacional de Ciberseguridad</h3>
-                        <p class="time">09:00</p>
-                        <p class="location">Sede: Universidad José Martí, Sancti Spíritus</p>
-                        <ul>
-                            <li>Palabras iniciales</li>
-                            <li>Conferencia magistral</li>
-                            <li>Feria tecnológica expositiva</li>
-                            <li>Lanzamiento de los concursos</li>
-                        </ul>
-                        <span class="press-label">Presencia de la prensa</span>
-                    </div>
-                </div>
+.scroll-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
 
-                <!-- Viernes 21 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Viernes 21</div>
-                    <div class="timeline-content">
-                        <div class="event-group">
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia: Preparación para el futuro laboral</h4>
-                                <p class="location">Lugar: Universidad José Martí, Sancti Spíritus</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia: Técnicas de seguridad en el móvil</h4>
-                                <p class="location">Público: Cátedra del Adulto Mayor</p>
-                                <p class="location">Lugar: Galería Oscar Fernández Morera</p>
-                                <span class="press-label">Presencia de la prensa</span>
-                            </div>
-                            <div class="event">
-                                <p class="time">10:30-11:30</p>
-                                <h4>Panel: IA y ciberamenazas. ¿Aliados o enemigos?</h4>
-                                <p class="location">Lugar: Universidad José Martí, Sancti Spíritus</p>
-                                <span class="press-label">Presencia de la prensa</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+.scroll-top-btn:hover {
+    background: var(--secondary-blue);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 12, 73, 0.4);
+}
 
-                <!-- Lunes 24 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Lunes 24</div>
-                    <div class="timeline-content">
-                        <div class="event-group">
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia: Concienciación temprana sobre riesgos digitales</h4>
-                                <p class="location">Especialista: OSRI</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">10:30-11:30</p>
-                                <h4>Conferencia: Protección de datos personales</h4>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    color: var(--white);
+    padding: 30px 0 80px 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
 
-                <!-- Martes 25 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Martes 25</div>
-                    <div class="timeline-content">
-                        <div class="event-group">
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia: Ciberseguridad y soberanía tecnológica</h4>
-                                <p class="location">Especialista: ETECSA</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">10:30-11:30</p>
-                                <h4>Panel: Comunicación social y ciberseguridad en la transformación digital. Desafíos para la soberanía informativa en Cuba</h4>
-                                <p class="location">Ponente: MSc. Mirelys Rodríguez (Dirección de Información y Comunicación Social)</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">13:30-14:30</p>
-                                <h4>Conferencia: Robótica y ciberseguridad</h4>
-                                <p class="location">Especialista: Joven Club</p>
-                                <p class="location">Lugar: IPEVCE Eusebio Olivera Rodríguez</p>
-                                <span class="press-label">Presencia de la prensa</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+.header-top {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 10;
+}
 
-                <!-- Miércoles 26 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Miércoles 26</div>
-                    <div class="timeline-content">
-                        <div class="event-group">
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia: Protección de datos y cumplimiento normativo</h4>
-                                <p class="location">Especialista: UPTCER</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia a estudiantes del IP Armando de la Rosa Ruiz</h4>
-                                <p class="location">Especialista: OSRI</p>
-                                <p class="location">Lugar: IP Armando de la Rosa Ruiz</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">10:30-11:30</p>
-                                <h4>Conferencia: Retos globales de la ciberseguridad en la era digital</h4>
-                                <p class="location">Especialista: Empresa de Tecnología de la Información y la Automática (ATI)</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">13:30-14:30</p>
-                                <h4>Conferencia: Plataforma normativa de ciberseguridad para la agricultura</h4>
-                                <p class="location">Especialista: EICMA</p>
-                                <p class="location">Lugar: UNISS</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
 
-                <!-- Jueves 27 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Jueves 27</div>
-                    <div class="timeline-content">
-                        <div class="event-group">
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia: Prevención del ciberacoso</h4>
-                                <p class="location">Especialista: MININT</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Orientación vocacional sobre ciberseguridad</h4>
-                                <p class="location">Visita: IPU Honorato del Castillo</p>
-                                <p class="location">Especialistas: OTC y OSRI</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">10:30-11:30</p>
-                                <h4>Conferencia: Ciberseguridad en desarrollo de software</h4>
-                                <p class="location">Especialista: Soluciones D Team, Sancti Spíritus</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">13:30-14:30</p>
-                                <h4>Conversatorio: Seguridad en las redes sociales en tiempos de la IA</h4>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                                <p class="location">Especialistas: OTC y UIC</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+.logo-wrapper {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
 
-                <!-- Viernes 28 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">Viernes 28</div>
-                    <div class="timeline-content">
-                        <div class="event-group">
-                            <div class="event">
-                                <p class="time">09:00-10:30</p>
-                                <h4>Conferencia: Seguridad en aplicaciones y servicios móviles</h4>
-                                <p class="location">Especialista: ETECSA</p>
-                                <p class="location">Lugar: Centro de Experiencias ETECSA</p>
-                            </div>
-                            <div class="event">
-                                <p class="time">10:30</p>
-                                <h4>Conclusiones de la Jornada</h4>
-                                <ul>
-                                    <li>Resultados de los concursos</li>
-                                    <li>Video resumen de la jornada</li>
-                                </ul>
-                                <p class="location">Lugar: Teatro de ETECSA</p>
-                                <span class="press-label">Presencia de la prensa</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
 
-    <!-- Nueva sección de Galería -->
-    <section id="galeria" class="gallery-section">
-        <div class="container">
-            <h2 class="section-title">Galería de Imágenes</h2>
-            <p class="section-subtitle">Momentos destacados de la IV Jornada Nacional de Ciberseguridad 2025</p>
-            
-            <div class="gallery-filters">
-                <button class="filter-btn active" data-filter="all">Todas</button>
-                <button class="filter-btn" data-filter="JNC2025">JNC 2025</button>
-            </div>
-            
-            <div class="gallery-grid">
-                <!-- Las imágenes se cargarán dinámicamente con JavaScript -->
-                <div class="gallery-loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Cargando imágenes de la galería...</p>
-                </div>
-            </div>
-            
-            <div class="gallery-load-more" style="display: none;">
-                <button id="loadMoreBtn" class="btn btn-primary">Cargar más imágenes</button>
-            </div>
-            
-            <div class="gallery-empty" style="display: none;">
-                <i class="fas fa-images"></i>
-                <p>No se encontraron imágenes en la galería</p>
-                <p class="gallery-help">Asegúrate de tener imágenes en la carpeta <strong>galeria/2025</strong></p>
-            </div>
-        </div>
-    </section>
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
-    <!-- Modal para vista ampliada de imágenes -->
-    <div id="imageModal" class="modal">
-        <span class="modal-close">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <div class="modal-caption" id="modalCaption"></div>
-        <div class="modal-nav">
-            <button class="modal-prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="modal-next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+.logo-main {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--white);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <div class="footer-logo-wrapper">
-                        <img src="logo.png" alt="Logo Jornada Nacional de Ciberseguridad" class="footer-logo-img">
-                    </div>
-                    <span>IV Jornada Nacional de Ciberseguridad de Cuba 2025</span>
-                </div>
-                <div class="footer-info">
-                    <p>IV Jornada Nacional de Ciberseguridad de Cuba</p>
-                    <p>Protegiendo el presente, asegurando el futuro</p>
-                    <p>#CiberseguridadParaTodos</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 IV Jornada Nacional de Ciberseguridad de Cuba. Todos los derechos reservados.</p>
-                <p>Desarrollado por Edisbel Ramirez Lovatos con ❤️ para Cuba 🇨🇺 y el mundo 🌎</p>
-            </div>
-        </div>
-    </footer>
+.logo-sub {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
 
-    <script>
-        // Sistema de partículas solo en el hero - DETRÁS del contenido
-        const canvas = document.getElementById('particlesCanvas');
-        const ctx = canvas.getContext('2d');
-        const header = document.querySelector('header');
-        
-        // Configurar canvas para que ocupe solo el header
-        function setupCanvas() {
-            const headerRect = header.getBoundingClientRect();
-            canvas.width = headerRect.width;
-            canvas.height = headerRect.height;
-            canvas.style.width = headerRect.width + 'px';
-            canvas.style.height = headerRect.height + 'px';
-        }
-        
-        setupCanvas();
-        window.addEventListener('resize', setupCanvas);
-        
-        // Partículas
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-                this.color = `rgba(0, 212, 255, ${Math.random() * 0.3})`; // Más transparente
-                this.alpha = Math.random() * 0.3 + 0.1; // Más transparente
-            }
-            
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                
-                // Rebotar en los bordes del canvas
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-                
-                // Efecto de parpadeo más sutil
-                this.alpha += (Math.random() - 0.5) * 0.01;
-                this.alpha = Math.max(0.05, Math.min(0.4, this.alpha));
-            }
-            
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Efecto de brillo más sutil
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = this.color;
-                ctx.restore();
-            }
-        }
-        
-        // Crear partículas
-        const particles = [];
-        const particleCount = 60; // Menos partículas para que no distraigan
-        
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-        
-        // Animación
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Dibujar conexiones entre partículas cercanas (más sutiles)
-            ctx.strokeStyle = 'rgba(0, 212, 255, 0.05)';
-            ctx.lineWidth = 0.3;
-            
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 80) { // Conexiones más cortas
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            
-            // Actualizar y dibujar partículas
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-            
-            requestAnimationFrame(animate);
-        }
-        
-        animate();
+.hero {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
 
-        // Botón para subir
-        const scrollToTopBtn = document.getElementById('scrollToTop');
-        
-        // Mostrar/ocultar botón al hacer scroll
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                scrollToTopBtn.classList.add('visible');
-            } else {
-                scrollToTopBtn.classList.remove('visible');
-            }
-        });
-        
-        // Función para subir al inicio
-        scrollToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // Smooth scroll para los enlaces internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-        // GALERÍA DE IMÁGENES - JavaScript
-        const galleryGrid = document.querySelector('.gallery-grid');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
-        const modalCaption = document.getElementById('modalCaption');
-        const modalClose = document.querySelector('.modal-close');
-        const modalPrev = document.querySelector('.modal-prev');
-        const modalNext = document.querySelector('.modal-next');
-        const galleryLoading = document.querySelector('.gallery-loading');
-        const galleryEmpty = document.querySelector('.gallery-empty');
-        const galleryLoadMore = document.querySelector('.gallery-load-more');
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
 
-        // LISTA de imágenes reales - foto1.jpeg a foto26.jpeg
-        const galleryImages = [
-            { src: 'galeria/2025/foto1.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto2.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto3.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto4.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto5.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto6.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto7.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto8.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto9.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto10.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto11.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto12.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto13.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto14.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto15.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto16.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto17.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto18.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto19.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto20.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto21.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto22.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto23.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto24.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto25.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto26.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' }
-        ];
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: 400;
+    opacity: 0.95;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+}
 
-        let currentFilter = 'all';
-        let currentImages = [];
-        let currentIndex = 0;
-        let visibleImages = 8;
+.hero-tagline {
+    margin-bottom: 40px;
+}
 
-        // Inicializar galería
-        function initGallery() {
-            galleryLoading.style.display = 'none';
-            
-            if (galleryImages.length === 0) {
-                galleryEmpty.style.display = 'block';
-                return;
-            }
-            
-            currentImages = [...galleryImages];
-            renderGallery();
-            setupFilters();
-            setupModal();
-        }
+.hashtag-large {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
 
-        // Renderizar imágenes en la galería
-        function renderGallery() {
-            galleryGrid.innerHTML = '';
-            
-            const filteredImages = currentFilter === 'all' 
-                ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
-            
-            const imagesToShow = filteredImages.slice(0, visibleImages);
-            
-            if (imagesToShow.length === 0) {
-                galleryEmpty.style.display = 'block';
-                galleryLoadMore.style.display = 'none';
-                return;
-            }
-            
-            galleryEmpty.style.display = 'none';
-            
-            imagesToShow.forEach((image, index) => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                galleryItem.setAttribute('data-category', image.category);
-                galleryItem.setAttribute('data-index', index);
-                
-                galleryItem.innerHTML = `
-                    <div class="gallery-img-container">
-                        <img src="${image.src}" alt="${image.caption}" class="gallery-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbiBubyBlbmNvbnRyYWRhPC90ZXh0Pjwvc3ZnPg=='">
-                        <div class="gallery-overlay">
-                            <div class="gallery-caption">${image.caption}</div>
-                            <div class="gallery-zoom">
-                                <i class="fas fa-search-plus"></i>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                galleryGrid.appendChild(galleryItem);
-            });
-            
-            // Mostrar u ocultar botón "Cargar más"
-            if (visibleImages >= filteredImages.length) {
-                galleryLoadMore.style.display = 'none';
-            } else {
-                galleryLoadMore.style.display = 'block';
-            }
-            
-            // Agregar event listeners a las imágenes
-            document.querySelectorAll('.gallery-img-container').forEach((container, index) => {
-                container.addEventListener('click', () => {
-                    const filteredImages = currentFilter === 'all' 
-                        ? currentImages 
-                        : currentImages.filter(img => img.category === currentFilter);
-                    openModal(index, filteredImages);
-                });
-            });
-        }
+.hero-dates {
+    margin-bottom: 50px;
+}
 
-        // Configurar filtros
-        function setupFilters() {
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Remover clase active de todos los botones
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    // Agregar clase active al botón clickeado
-                    btn.classList.add('active');
-                    
-                    currentFilter = btn.getAttribute('data-filter');
-                    visibleImages = 8;
-                    renderGallery();
-                });
-            });
-        }
+.dates {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--white);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+}
 
-        // Configurar modal
-        function setupModal() {
-            // Cerrar modal
-            modalClose.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-            
-            // Navegación
-            modalPrev.addEventListener('click', showPrevImage);
-            modalNext.addEventListener('click', showNextImage);
-            
-            // Navegación con teclado
-            document.addEventListener('keydown', (e) => {
-                if (modal.style.display === 'block') {
-                    if (e.key === 'Escape') closeModal();
-                    if (e.key === 'ArrowLeft') showPrevImage();
-                    if (e.key === 'ArrowRight') showNextImage();
-                }
-            });
-        }
+.theme {
+    font-size: 1.3rem;
+    font-weight: 500;
+    opacity: 0.95;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
 
-        // Abrir modal
-        function openModal(index, images) {
-            const filteredImages = currentFilter === 'all' 
-                ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
-                
-            currentIndex = index;
-            const image = filteredImages[currentIndex];
-            
-            modalImg.src = image.src;
-            modalCaption.textContent = image.caption;
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
+.hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-        // Cerrar modal
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+.btn {
+    padding: 15px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 10;
+}
 
-        // Mostrar imagen anterior
-        function showPrevImage() {
-            const filteredImages = currentFilter === 'all' 
-                ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
-                
-            currentIndex = (currentIndex - 1 + filteredImages.length) % filteredImages.length;
-            const image = filteredImages[currentIndex];
-            
-            modalImg.src = image.src;
-            modalCaption.textContent = image.caption;
-        }
+.btn-primary {
+    background: var(--white);
+    color: var(--primary-blue);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
 
-        // Mostrar siguiente imagen
-        function showNextImage() {
-            const filteredImages = currentFilter === 'all' 
-                ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
-                
-            currentIndex = (currentIndex + 1) % filteredImages.length;
-            const image = filteredImages[currentIndex];
-            
-            modalImg.src = image.src;
-            modalCaption.textContent = image.caption;
-        }
+.btn-primary:hover {
+    background: var(--light-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
 
-        // Cargar más imágenes
-        loadMoreBtn.addEventListener('click', () => {
-            visibleImages += 8;
-            renderGallery();
-        });
+.btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
 
-        // Inicializar la galería cuando se carga la página
-        document.addEventListener('DOMContentLoaded', initGallery);
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--primary-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
 
-        // Funcionalidad para la imagen de publicidad ampliada
-        const adImage = document.querySelector('.ad-image-container');
-        const adModal = document.getElementById('adModal');
-        const adModalImage = document.getElementById('adModalImage');
-        const adModalClose = adModal.querySelector('.modal-close');
+/* Secciones */
+section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 2;
+}
 
-        // Abrir modal de publicidad al hacer clic en la imagen
-        adImage.addEventListener('click', function() {
-            adModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
+.info-section {
+    background: var(--light-gray);
+}
 
-        // Cerrar modal de publicidad
-        adModalClose.addEventListener('click', function() {
-            adModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 60px;
+    font-weight: 700;
+    position: relative;
+}
 
-        // Cerrar modal al hacer clic fuera de la imagen
-        adModal.addEventListener('click', function(e) {
-            if (e.target === adModal) {
-                adModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--primary-blue);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
 
-        // Cerrar modal con tecla Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && adModal.style.display === 'block') {
-                adModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    </script>
-</body>
-</html>
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Tarjetas de información */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.info-card {
+    background: var(--white);
+    padding: 50px 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-top: 5px solid var(--primary-blue);
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    margin-bottom: 25px;
+}
+
+.info-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--primary-blue);
+}
+
+.info-card p {
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* Sección de Publicidad */
+.ad-section {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    padding: 80px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.ad-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.ad-image-container {
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.ad-image-container:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.ad-image {
+    width: 500px;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.ad-image-container:hover .ad-image {
+    transform: scale(1.05);
+}
+
+.ad-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 12, 73, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.ad-image-container:hover .ad-image-overlay {
+    opacity: 1;
+}
+
+.ad-zoom-btn {
+    color: var(--white);
+    font-size: 3rem;
+    background: var(--primary-blue);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.ad-zoom-btn:hover {
+    background: var(--secondary-blue);
+    transform: scale(1.1);
+}
+
+.ad-text {
+    color: var(--white);
+    text-align: left;
+    max-width: 400px;
+}
+
+.ad-text h3 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    line-height: 1.2;
+}
+
+.ad-text p {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    opacity: 0.95;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ad-click-hint {
+    font-size: 1rem !important;
+    margin-top: 20px !important;
+    font-style: italic;
+    opacity: 0.8 !important;
+    color: var(--light-blue) !important;
+}
+
+/* Modal específico para publicidad */
+.ad-modal .modal-content {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Sección del programa */
+.program-section {
+    background: var(--white);
+}
+
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--light-blue);
+    border-radius: 2px;
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.timeline-date {
+    width: 120px;
+    flex-shrink: 0;
+    font-weight: 700;
+    color: var(--primary-blue);
+    font-size: 1.2rem;
+    padding-top: 8px;
+}
+
+.timeline-content {
+    flex: 1;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid var(--primary-blue);
+    margin-left: 25px;
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateX(5px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+}
+
+.timeline-content h3 {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.timeline-content h4 {
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.time {
+    color: var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.location, .participants {
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.event-group {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.event {
+    padding-bottom: 25px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.event:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.timeline-content ul {
+    margin: 15px 0 20px 25px;
+}
+
+.timeline-content li {
+    margin-bottom: 8px;
+    color: var(--text-light);
+    position: relative;
+}
+
+.timeline-content li::before {
+    content: '•';
+    color: var(--primary-blue);
+    font-weight: bold;
+    position: absolute;
+    left: -15px;
+}
+
+.press-label {
+    display: inline-block;
+    background: var(--light-blue);
+    color: var(--primary-blue);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 15px;
+    border: 1px solid var(--primary-blue);
+}
+
+/* Sección de Galería */
+.gallery-section {
+    background: var(--light-gray);
+}
+
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background: var(--white);
+    border: 2px solid var(--primary-blue);
+    color: var(--primary-blue);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.gallery-item {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-img-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-img {
+    transform: scale(1.05);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 12, 73, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+    text-align: center;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-caption {
+    color: var(--white);
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.gallery-zoom {
+    color: var(--white);
+    font-size: 1.5rem;
+    background: var(--primary-blue);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.gallery-zoom:hover {
+    background: var(--secondary-blue);
+    transform: scale(1.1);
+}
+
+.gallery-load-more {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.gallery-loading,
+.gallery-empty {
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1 / -1;
+}
+
+.gallery-loading i {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+.gallery-empty i {
+    font-size: 4rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.gallery-help {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 10px;
+}
+
+/* Modal para imágenes */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    display: block;
+    margin: auto;
+    max-width: 90%;
+    max-height: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: var(--white);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--light-blue);
+}
+
+.modal-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: var(--white);
+    font-size: 1.1rem;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    transform: translateY(-50%);
+}
+
+.modal-prev,
+.modal-next {
+    background: rgba(0, 12, 73, 0.7);
+    color: var(--white);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-prev:hover,
+.modal-next:hover {
+    background: var(--primary-blue);
+    transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+    background: var(--primary-blue);
+    color: var(--white);
+    padding: 60px 0 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.footer-logo-wrapper {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.footer-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.footer-info {
+    text-align: center;
+    flex: 1;
+}
+
+.footer-info p {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.footer-bottom {
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    padding-top: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.footer-bottom p {
+    margin-bottom: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .scroll-top-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .scroll-top-btn.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .header-top {
+        margin-bottom: 40px;
+    }
+    
+    .logo-container {
+        padding: 15px 20px;
+        gap: 20px;
+    }
+    
+    .logo-wrapper {
+        width: 60px;
+        height: 60px;
+        padding: 6px;
+    }
+    
+    .logo-main {
+        font-size: 1.4rem;
+    }
+    
+    .logo-sub {
+        font-size: 0.9rem;
+    }
+    
+    header {
+        padding: 30px 0 60px 0;
+        min-height: 80vh;
+    }
+    
+    .hero h1 {
+        font-size: 2.3rem;
+        margin-bottom: 15px;
+    }
+    
+    .hero h2 {
+        font-size: 1.6rem;
+        margin-bottom: 25px;
+    }
+    
+    .hashtag-large {
+        font-size: 1.3rem;
+        padding: 12px 25px;
+    }
+    
+    .hero-dates {
+        margin-bottom: 40px;
+    }
+    
+    .dates {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+    }
+    
+    .theme {
+        font-size: 1.1rem;
+    }
+    
+    .hero-actions {
+        gap: 15px;
+    }
+    
+    .btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 50px;
+    }
+    
+    /* Estilos responsive para la sección de publicidad */
+    .ad-section {
+        padding: 50px 0;
+    }
+    
+    .ad-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 30px;
+    }
+    
+    .ad-image-container {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .ad-image {
+        width: 100%;
+        height: 250px;
+    }
+    
+    .ad-text {
+        text-align: center;
+        max-width: 100%;
+    }
+    
+    .ad-text h3 {
+        font-size: 1.8rem;
+    }
+    
+    .ad-text p {
+        font-size: 1.1rem;
+    }
+    
+    .ad-zoom-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-date {
+        width: 80px;
+        font-size: 1.1rem;
+    }
+    
+    .timeline-content {
+        margin-left: 20px;
+        padding: 25px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .gallery-img-container {
+        height: 200px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+    
+    .footer-logo {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .footer-logo-wrapper {
+        width: 70px;
+        height: 70px;
+        padding: 8px;
+    }
+    
+    .footer-logo span {
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    section {
+        padding: 60px 0;
+    }
+    
+    .info-grid {
+        gap: 30px;
+    }
+    
+    .info-card {
+        padding: 40px 25px;
+    }
+    
+    .modal-content {
+        max-width: 95%;
+        max-height: 70%;
+    }
+    
+    .ad-modal .modal-content {
+        max-width: 95%;
+        max-height: 75%;
+    }
+    
+    .modal-nav {
+        padding: 0 10px;
+    }
+    
+    .modal-prev,
+    .modal-next {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.4rem;
+    }
+    
+    .hashtag-large {
+        font-size: 1.1rem;
+        padding: 10px 20px;
+    }
+    
+    .dates {
+        font-size: 1.1rem;
+    }
+    
+    .theme {
+        font-size: 1rem;
+    }
+    
+    .logo-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 200px;
+        text-align: center;
+    }
+    
+    /* Estilos responsive adicionales para la sección de publicidad */
+    .ad-section {
+        padding: 40px 0;
+    }
+    
+    .ad-content {
+        padding: 20px;
+        gap: 25px;
+    }
+    
+    .ad-image {
+        height: 200px;
+    }
+    
+    .ad-text h3 {
+        font-size: 1.5rem;
+    }
+    
+    .ad-text p {
+        font-size: 1rem;
+    }
+    
+    .ad-zoom-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .footer-logo-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+    
+    header {
+        min-height: 70vh;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-filters {
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
