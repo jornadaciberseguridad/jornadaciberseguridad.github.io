@@ -83,15 +83,30 @@
     <section class="ad-section">
         <div class="container">
             <div class="ad-content">
-                <img src="publicidad/publicidad1-inauguracion.jpeg" alt="Publicidad Inauguración JNC 2025" class="ad-image">
+                <div class="ad-image-container">
+                    <img src="publicidad/publicidad1-inauguracion.jpeg" alt="Publicidad Inauguración JNC 2025" class="ad-image">
+                    <div class="ad-image-overlay">
+                        <div class="ad-zoom-btn">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
                 <div class="ad-text">
                     <h3>¡No te pierdas la inauguración!</h3>
                     <p>Jueves 20 de Noviembre, 09:00</p>
                     <p>Universidad José Martí, Sancti Spíritus</p>
+                    <p class="ad-click-hint">Haz clic en la imagen para ampliar</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modal para la imagen de publicidad ampliada -->
+    <div id="adModal" class="modal ad-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="adModalImage" src="publicidad/publicidad1-inauguracion.jpeg" alt="Publicidad Inauguración JNC 2025">
+        <div class="modal-caption">Publicidad - Inauguración JNC 2025</div>
+    </div>
 
     <!-- Sección del Programa de Actividades -->
     <section id="programa" class="program-section">
@@ -712,6 +727,40 @@
 
         // Inicializar la galería cuando se carga la página
         document.addEventListener('DOMContentLoaded', initGallery);
+
+        // Funcionalidad para la imagen de publicidad ampliada
+        const adImage = document.querySelector('.ad-image-container');
+        const adModal = document.getElementById('adModal');
+        const adModalImage = document.getElementById('adModalImage');
+        const adModalClose = adModal.querySelector('.modal-close');
+
+        // Abrir modal de publicidad al hacer clic en la imagen
+        adImage.addEventListener('click', function() {
+            adModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Cerrar modal de publicidad
+        adModalClose.addEventListener('click', function() {
+            adModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Cerrar modal al hacer clic fuera de la imagen
+        adModal.addEventListener('click', function(e) {
+            if (e.target === adModal) {
+                adModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && adModal.style.display === 'block') {
+                adModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
     </script>
 </body>
 </html>
