@@ -399,6 +399,8 @@
             <div class="gallery-filters">
                 <button class="filter-btn active" data-filter="all">Todas</button>
                 <button class="filter-btn" data-filter="JNC2025">JNC 2025</button>
+                <button class="filter-btn" data-filter="inauguracion">Inauguración</button>
+                <button class="filter-btn" data-filter="panel">Panel</button>
             </div>
             
             <div class="gallery-grid">
@@ -696,7 +698,7 @@
             }
         });
 
-        // GALERÍA DE IMÁGENES - JavaScript
+        // GALERÍA DE IMÁGENES - JavaScript CORREGIDO
         const galleryGrid = document.querySelector('.gallery-grid');
         const filterBtns = document.querySelectorAll('.filter-btn');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
@@ -710,55 +712,55 @@
         const galleryEmpty = document.querySelector('.gallery-empty');
         const galleryLoadMore = document.querySelector('.gallery-load-more');
 
-        // LISTA de imágenes reales - foto1.jpeg a foto26.jpeg
+        // LISTA de imágenes reales con categorías basadas en caption
         const galleryImages = [
-            { src: 'galeria/2025/foto1.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto2.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto3.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto4.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto5.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto6.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto7.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto8.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto9.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto10.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto11.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto12.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto13.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto14.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto15.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto16.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto17.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto18.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto19.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto20.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto21.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto22.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto23.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto24.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto25.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/foto26.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025' },
-            { src: 'galeria/2025/fotos27.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos28.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos29.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos30.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos31.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos32.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos33.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos34.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos35.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos36.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos37.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos38.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos39.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos40.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos41.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos42.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos43.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos44.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos45.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos46.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' },
-  { src: 'galeria/2025/fotos47.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?' }
+            { src: 'galeria/2025/foto1.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto2.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto3.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto4.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto5.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto6.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto7.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto8.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto9.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto10.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto11.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto12.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto13.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto14.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto15.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto16.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto17.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto18.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto19.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto20.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto21.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto22.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto23.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto24.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto25.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/foto26.jpeg', category: 'JNC2025', caption: 'Inauguración de la Jornada Nacional de Ciberseguridad 2025', tags: ['inauguracion'] },
+            { src: 'galeria/2025/fotos27.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos28.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos29.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos30.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos31.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos32.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos33.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos34.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos35.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos36.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos37.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos38.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos39.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos40.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos41.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos42.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos43.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos44.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos45.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos46.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] },
+            { src: 'galeria/2025/fotos47.jpeg', category: 'JNC2025', caption: 'Panel Preparación para el futuro laboral y IA y ciberamenazas. ¿Aliados o enemigos?', tags: ['panel'] }
         ];
 
         let currentFilter = 'all';
@@ -787,7 +789,12 @@
             
             const filteredImages = currentFilter === 'all' 
                 ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
+                : currentImages.filter(img => {
+                    if (currentFilter === 'all') return true;
+                    if (currentFilter === 'JNC2025') return img.category === 'JNC2025';
+                    // Filtrar por tags basados en caption
+                    return img.tags && img.tags.includes(currentFilter);
+                });
             
             const imagesToShow = filteredImages.slice(0, visibleImages);
             
@@ -832,7 +839,11 @@
                 container.addEventListener('click', () => {
                     const filteredImages = currentFilter === 'all' 
                         ? currentImages 
-                        : currentImages.filter(img => img.category === currentFilter);
+                        : currentImages.filter(img => {
+                            if (currentFilter === 'all') return true;
+                            if (currentFilter === 'JNC2025') return img.category === 'JNC2025';
+                            return img.tags && img.tags.includes(currentFilter);
+                        });
                     openModal(index, filteredImages);
                 });
             });
@@ -854,12 +865,20 @@
             });
         }
 
-        // Configurar modal
+        // Configurar modal CORREGIDO
         function setupModal() {
-            // Cerrar modal
-            modalClose.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
+            // Cerrar modal - CORRECCIÓN AQUÍ
+            modalClose.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
             });
             
             // Navegación
@@ -867,9 +886,12 @@
             modalNext.addEventListener('click', showNextImage);
             
             // Navegación con teclado
-            document.addEventListener('keydown', (e) => {
+            document.addEventListener('keydown', function(e) {
                 if (modal.style.display === 'block') {
-                    if (e.key === 'Escape') closeModal();
+                    if (e.key === 'Escape') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
                     if (e.key === 'ArrowLeft') showPrevImage();
                     if (e.key === 'ArrowRight') showNextImage();
                 }
@@ -880,7 +902,11 @@
         function openModal(index, images) {
             const filteredImages = currentFilter === 'all' 
                 ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
+                : currentImages.filter(img => {
+                    if (currentFilter === 'all') return true;
+                    if (currentFilter === 'JNC2025') return img.category === 'JNC2025';
+                    return img.tags && img.tags.includes(currentFilter);
+                });
                 
             currentIndex = index;
             const image = filteredImages[currentIndex];
@@ -891,17 +917,15 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Cerrar modal
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
         // Mostrar imagen anterior
         function showPrevImage() {
             const filteredImages = currentFilter === 'all' 
                 ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
+                : currentImages.filter(img => {
+                    if (currentFilter === 'all') return true;
+                    if (currentFilter === 'JNC2025') return img.category === 'JNC2025';
+                    return img.tags && img.tags.includes(currentFilter);
+                });
                 
             currentIndex = (currentIndex - 1 + filteredImages.length) % filteredImages.length;
             const image = filteredImages[currentIndex];
@@ -914,7 +938,11 @@
         function showNextImage() {
             const filteredImages = currentFilter === 'all' 
                 ? currentImages 
-                : currentImages.filter(img => img.category === currentFilter);
+                : currentImages.filter(img => {
+                    if (currentFilter === 'all') return true;
+                    if (currentFilter === 'JNC2025') return img.category === 'JNC2025';
+                    return img.tags && img.tags.includes(currentFilter);
+                });
                 
             currentIndex = (currentIndex + 1) % filteredImages.length;
             const image = filteredImages[currentIndex];
