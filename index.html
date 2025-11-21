@@ -50,7 +50,7 @@
         </div>
     </header>
 
-        <!-- Carrusel de Noticias Destacadas -->
+    <!-- Carrusel de Noticias Destacadas -->
     <section class="news-carousel-section">
         <div class="container">
             <h2 class="section-title">Noticias Destacadas</h2>
@@ -209,8 +209,8 @@
                     </div>
                 </div>
                 <div class="ad-text">
-                    <h3>Memorias de la Inauguración de la IV Jornada Nacional de Ciberseguridad de Cuba 2025</h3>
-                    <p>La inauguración de la IV Jornada Nacional de Ciberseguridad de Cuba 2025 permanece como un recuerdo imborrable, capturado en esta imagen que transmite el entusiasmo y la activa participación de todos los presentes. Este encuentro simboliza un avance decisivo hacia la construcción de un futuro digital más seguro, soberano y resiliente para nuestro país.</p>
+                    <h3>¡No te pierdas la inauguración!</h3>
+                    <p>Jueves 20 de Noviembre, 09:00</p>
                     <p>Universidad José Martí, Sancti Spíritus</p>
                     <p class="ad-click-hint">Haz clic en la imagen para ampliar</p>
                 </div>
@@ -522,8 +522,8 @@
                 this.size = Math.random() * 2 + 1;
                 this.speedX = Math.random() * 1 - 0.5;
                 this.speedY = Math.random() * 1 - 0.5;
-                this.color = `rgba(0, 212, 255, ${Math.random() * 0.3})`; // Más transparente
-                this.alpha = Math.random() * 0.3 + 0.1; // Más transparente
+                this.color = `rgba(0, 212, 255, ${Math.random() * 0.3})`;
+                this.alpha = Math.random() * 0.3 + 0.1;
             }
             
             update() {
@@ -556,7 +556,7 @@
         
         // Crear partículas
         const particles = [];
-        const particleCount = 60; // Menos partículas para que no distraigan
+        const particleCount = 60;
         
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle());
@@ -576,7 +576,7 @@
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (distance < 80) { // Conexiones más cortas
+                    if (distance < 80) {
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -628,6 +628,110 @@
                     });
                 }
             });
+        });
+
+        // Carrusel de Noticias Destacadas
+        const carouselTrack = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        const indicators = document.querySelectorAll('.indicator');
+
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        // Función para mostrar slide específico
+        function showSlide(slideIndex) {
+            if (slideIndex < 0) {
+                currentSlide = totalSlides - 1;
+            } else if (slideIndex >= totalSlides) {
+                currentSlide = 0;
+            } else {
+                currentSlide = slideIndex;
+            }
+            
+            // Mover el track
+            carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Actualizar indicadores
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        // Event listeners para controles
+        prevBtn.addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+
+        // Event listeners para indicadores
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Auto-avance cada 5 segundos
+        let autoSlide = setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+
+        // Pausar auto-avance al interactuar
+        carouselTrack.addEventListener('mouseenter', () => {
+            clearInterval(autoSlide);
+        });
+
+        carouselTrack.addEventListener('mouseleave', () => {
+            autoSlide = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+        });
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'ArrowRight') {
+                showSlide(currentSlide + 1);
+            }
+        });
+
+        // Funcionalidad para la imagen de publicidad ampliada
+        const adImage = document.querySelector('.ad-image-container');
+        const adModal = document.getElementById('adModal');
+        const adModalImage = document.getElementById('adModalImage');
+        const adModalClose = adModal.querySelector('.modal-close');
+
+        // Abrir modal de publicidad al hacer clic en la imagen
+        adImage.addEventListener('click', function() {
+            adModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Cerrar modal de publicidad
+        adModalClose.addEventListener('click', function() {
+            adModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Cerrar modal al hacer clic fuera de la imagen
+        adModal.addEventListener('click', function(e) {
+            if (e.target === adModal) {
+                adModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && adModal.style.display === 'block') {
+                adModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         });
 
         // GALERÍA DE IMÁGENES - JavaScript
@@ -844,40 +948,6 @@
 
         // Inicializar la galería cuando se carga la página
         document.addEventListener('DOMContentLoaded', initGallery);
-
-        // Funcionalidad para la imagen de publicidad ampliada
-        const adImage = document.querySelector('.ad-image-container');
-        const adModal = document.getElementById('adModal');
-        const adModalImage = document.getElementById('adModalImage');
-        const adModalClose = adModal.querySelector('.modal-close');
-
-        // Abrir modal de publicidad al hacer clic en la imagen
-        adImage.addEventListener('click', function() {
-            adModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
-
-        // Cerrar modal de publicidad
-        adModalClose.addEventListener('click', function() {
-            adModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        // Cerrar modal al hacer clic fuera de la imagen
-        adModal.addEventListener('click', function(e) {
-            if (e.target === adModal) {
-                adModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Cerrar modal con tecla Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && adModal.style.display === 'block') {
-                adModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
     </script>
 </body>
 </html>
