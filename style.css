@@ -892,6 +892,70 @@ section {
     border: 1px solid var(--primary-blue);
 }
 
+/* Sección de logos de participantes */
+.logos-section {
+    background: var(--light-gray);
+    padding: 60px 0;
+}
+
+.logos-carousel-container {
+    position: relative;
+    overflow: hidden;
+    padding: 30px 0;
+}
+
+.logos-track {
+    display: flex;
+    gap: 40px;
+    width: max-content;
+    animation: scrollLogos 30s linear infinite;
+}
+
+.logo-slide {
+    flex-shrink: 0;
+}
+
+.logo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 150px;
+    text-align: center;
+    padding: 20px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.logo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.logo-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.logo-item span {
+    font-weight: 600;
+    color: var(--primary-blue);
+    font-size: 0.9rem;
+}
+
+@keyframes scrollLogos {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
 /* Sección de Galería */
 .gallery-section {
     background: var(--light-gray);
@@ -1411,6 +1475,25 @@ footer {
         padding: 25px;
     }
     
+    /* Responsive para carrusel de logos */
+    .logos-section {
+        padding: 40px 0;
+    }
+    
+    .logo-item {
+        width: 120px;
+        padding: 15px;
+    }
+    
+    .logo-item img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo-item span {
+        font-size: 0.8rem;
+    }
+    
     .gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
@@ -1603,6 +1686,25 @@ footer {
         width: 50px;
         height: 50px;
         font-size: 1.5rem;
+    }
+    
+    /* Responsive adicional para carrusel de logos */
+    .logos-section {
+        padding: 30px 0;
+    }
+    
+    .logo-item {
+        width: 100px;
+        padding: 10px;
+    }
+    
+    .logo-item img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-item span {
+        font-size: 0.7rem;
     }
     
     .footer-logo-wrapper {
