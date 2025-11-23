@@ -490,6 +490,90 @@
         </div>
     </section>
 
+    <!-- Carrusel de logos de participantes -->
+    <section class="logos-section">
+        <div class="container">
+            <h2 class="section-title">Instituciones Participantes</h2>
+            <div class="logos-carousel-container">
+                <div class="logos-track">
+                    <!-- Logos de instituciones participantes -->
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/otc.png" alt="OTC">
+                            <span>OTC</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/etecsa.png" alt="ETECSA">
+                            <span>ETECSA</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/uniss.png" alt="UNISS">
+                            <span>UNISS</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/uic.png" alt="UIC">
+                            <span>UIC</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/minint.png" alt="MININT">
+                            <span>MININT</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/gobierno.png" alt="Gobierno">
+                            <span>Gobierno</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/osri.png" alt="OSRI">
+                            <span>OSRI</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/joven-club.png" alt="Joven Club">
+                            <span>Joven Club</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/uptcer.png" alt="UPTCER">
+                            <span>UPTCER</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/eicma.png" alt="EICMA">
+                            <span>EICMA</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/ati.png" alt="ATI">
+                            <span>ATI</span>
+                        </div>
+                    </div>
+                    <div class="logo-slide">
+                        <div class="logo-item">
+                            <img src="logos/d-team.png" alt="Soluciones D Team">
+                            <span>Soluciones D Team</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Nueva sección de Galería -->
     <section id="galeria" class="gallery-section">
         <div class="container">
@@ -796,6 +880,32 @@
                 adModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             }
+        });
+
+        // Carrusel de logos de participantes
+        const logosTrack = document.querySelector('.logos-track');
+        let logoPosition = 0;
+        const logoSlideWidth = 200; // Ancho aproximado de cada logo con margen
+
+        function moveLogos() {
+            logoPosition -= 1;
+            if (logoPosition < -logoSlideWidth * 6) { // Reiniciar después de 6 logos
+                logoPosition = 0;
+            }
+            logosTrack.style.transform = `translateX(${logoPosition}px)`;
+        }
+
+        // Iniciar animación del carrusel de logos
+        let logoInterval = setInterval(moveLogos, 30);
+
+        // Pausar animación al pasar el mouse
+        const logosContainer = document.querySelector('.logos-carousel-container');
+        logosContainer.addEventListener('mouseenter', () => {
+            clearInterval(logoInterval);
+        });
+
+        logosContainer.addEventListener('mouseleave', () => {
+            logoInterval = setInterval(moveLogos, 30);
         });
 
         // GALERÍA DE IMÁGENES - JavaScript CORREGIDO
